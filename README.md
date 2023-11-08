@@ -1,2 +1,2 @@
 # blog-platform
-https://blog-platform-4ak527puw-adelinamakarevich.vercel.app/
+https://blog-platform-mauve-two.vercel.app/
