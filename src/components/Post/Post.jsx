@@ -12,6 +12,7 @@ import { fetchLikePost } from '../../service/likePost'
 import authorImg from '../../assets/img/photo.svg'
 import likeImg from '../../assets/img/like.svg'
 import likeActiveImage from '../../assets/img/likeActive.svg'
+import { NotExistingPage } from '../NotExistingPage'
 
 import classes from './Post.module.scss'
 
@@ -29,8 +30,9 @@ const Post = () => {
   useEffect(() => {
     dispatch(fetchGetPost(slug, user.token))
   }, [slug])
-
-  if (!post.article) {
+  if (Object.keys(post).length === 0) {
+    return <NotExistingPage />
+  } else if (!post.article) {
     return <Spin size="large" />
   } else if (deletePost) {
     return <Alert type="error" message="Пост успешно удалён" />
@@ -51,7 +53,6 @@ const Post = () => {
         fetchLikePost(slug, user.token)
       }
     }
-
     return (
       <article className={classes['post']}>
         <header className={classes['header']}>

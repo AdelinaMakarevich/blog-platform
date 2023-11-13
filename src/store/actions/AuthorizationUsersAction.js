@@ -3,6 +3,7 @@ import {
   LOG_IN_PASSWORD,
   AUTHORIZATION,
   AUTHORIZATION_ERROR,
+  CLEAR_AUTHORIZATION,
   LOG_OUT,
 } from '../reducers/AuthorizationUsersReducer'
 
@@ -32,6 +33,12 @@ const authorizationError = () => {
   }
 }
 
+const clearAuthorization = () => {
+  return {
+    type: CLEAR_AUTHORIZATION,
+  }
+}
+
 const logOut = () => {
   localStorage.clear()
   return {
@@ -39,4 +46,4 @@ const logOut = () => {
   }
 }
 
-export { setLogInEmail, setLogInPassword, authorization, authorizationError, logOut }
+export { setLogInEmail, setLogInPassword, authorization, authorizationError, clearAuthorization, logOut }

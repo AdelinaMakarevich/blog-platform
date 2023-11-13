@@ -8,6 +8,7 @@ import {
   setPassword,
   setRotatePassword,
   setApproval,
+  clearForm,
 } from '../../../store/actions/RegisterAction'
 import { registerUsers } from '../../../service/registerUsers'
 import classesForm from '../FormStyle.module.scss'
@@ -17,12 +18,6 @@ import classes from './SignUp.module.scss'
 const SignUp = () => {
   const navigate = useNavigate()
   const authorization = useSelector((store) => store.logIn.authorization)
-
-  useEffect(() => {
-    if (authorization) {
-      navigate('/')
-    }
-  }, [])
 
   const dispatch = useDispatch()
   const username = useSelector((store) => store.register.username)
@@ -39,6 +34,12 @@ const SignUp = () => {
   const errorPassword = useSelector((store) => store.register.errorPassword)
   const errorRotatePassword = useSelector((store) => store.register.errorRotatePassword)
 
+  useEffect(() => {
+    dispatch(clearForm())
+    if (authorization) {
+      navigate('/')
+    }
+  }, [])
   const validForm =
     username && email && password && rotatePassword === password && !errorUsername && !errorEmail && !errorPassword
       ? true
@@ -48,6 +49,7 @@ const SignUp = () => {
     e.preventDefault()
     if (approval && validForm) {
       dispatch(registerUsers(username, email, password))
+      navigate('/sign-in')
     } else {
       console.log('Error')
     }
@@ -122,7 +124,7 @@ const SignUp = () => {
           ) : null}
         </label>
 
-        <hr className={`${approval ? classes['hr'] : classes['hr-error']} `} />
+        <hr className={`${validForm ? classes['hr'] : classes['hr-error']} `} />
 
         <label className={classes['label_checkbox']}>
           I agree to the processing of my personal information
@@ -135,13 +137,17 @@ const SignUp = () => {
           />
         </label>
 
-        <button type="submit" className={classesForm['button']} onClick={signUp}>
+        <button
+          type="submit"
+          className={`${approval ? classesForm['button'] : classesForm['button-error']}`}
+          onClick={signUp}
+        >
           Create
         </button>
       </form>
       <p className={classesForm['reassign']}>
         Alert have an account?{' '}
-        <Link to="/sign_in">
+        <Link to="/sign-in">
           <span>Sign In</span>
         </Link>
       </p>

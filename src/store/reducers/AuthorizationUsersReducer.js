@@ -2,6 +2,7 @@ export const LOG_IN_EMAIL = 'LOG_IN_EMAIL'
 export const LOG_IN_PASSWORD = 'LOG_IN_PASSWORD'
 export const AUTHORIZATION = 'AUTHORIZATION'
 export const AUTHORIZATION_ERROR = 'AUTHORIZATION_ERROR'
+export const CLEAR_AUTHORIZATION = 'CLEAR_AUTHORIZATION'
 export const LOG_OUT = 'LOG_OUT'
 
 const user = localStorage.user ? JSON.parse(localStorage.user) : false
@@ -29,6 +30,8 @@ const authorizationUsers = (state = initialState, action) => {
       return { ...state, authorizationError: true }
     case LOG_OUT:
       return { ...state, authorization: false }
+    case CLEAR_AUTHORIZATION:
+      return { ...initialState }
     default:
       return state
   }

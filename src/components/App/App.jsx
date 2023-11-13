@@ -18,7 +18,6 @@ const App = () => {
   const authorization = useSelector((store) => store.logIn.authorization)
 
   useEffect(() => {}, [authorization])
-
   return (
     <div className={classes['App']}>
       <header className={classes['header']}>

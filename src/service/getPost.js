@@ -1,4 +1,4 @@
-import { getPostAction } from '../store/actions/GetPostAction'
+import { getPostAction, errorPostAction } from '../store/actions/GetPostAction'
 
 const fetchGetPost = (slug, token) => {
   return (dispatch) => {
@@ -11,6 +11,9 @@ const fetchGetPost = (slug, token) => {
       .then((response) => response.json())
       .then((data) => {
         dispatch(getPostAction(data))
+      })
+      .catch(() => {
+        return dispatch(errorPostAction({}))
       })
   }
 }

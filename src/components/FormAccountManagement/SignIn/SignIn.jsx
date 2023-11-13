@@ -3,34 +3,36 @@ import { useSelector, useDispatch } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
 
 import { authorizationUsers } from '../../../service/authorizationUsers'
-import { setLogInEmail, setLogInPassword } from '../../../store/actions/AuthorizationUsersAction'
+import { setLogInEmail, setLogInPassword, clearAuthorization } from '../../../store/actions/AuthorizationUsersAction'
 import classesForm from '../FormStyle.module.scss'
 
 const SignIn = () => {
   const navigate = useNavigate()
   const authorization = useSelector((store) => store.logIn.authorization)
-
-  useEffect(() => {
-    if (authorization) {
-      navigate('/')
-    }
-  }, [])
-
   const dispatch = useDispatch()
   const authorizationError = useSelector((store) => store.logIn.authorizationError)
   const email = useSelector((store) => store.logIn.email)
   const password = useSelector((store) => store.logIn.password)
 
+  useEffect(() => {
+    dispatch(clearAuthorization())
+    if (authorization) {
+      navigate('/')
+    }
+  }, [])
+  useEffect(() => {
+    if (authorization) {
+      navigate('/')
+    }
+  }, [authorization])
   const logIn = (e) => {
     e.preventDefault()
     dispatch(authorizationUsers(email, password))
   }
-
   return (
     <div className={classesForm['wrapper']}>
       <h2 className={classesForm['title']}>Sign In</h2>
       <form className={classesForm['form']}>
-        {authorizationError ? <span className={classesForm['span-error']}>Неверный логин или пароль</span> : null}
         <label className={classesForm['label']}>
           Email address
           <input
@@ -53,6 +55,7 @@ const SignIn = () => {
             placeholder="Password"
             required
           />
+          {authorizationError ? <span className={classesForm['span-error']}>Неверный логин или пароль</span> : null}
         </label>
         <button type="submit" className={classesForm['button']} onClick={logIn}>
           Login
@@ -60,8 +63,8 @@ const SignIn = () => {
       </form>
       <p className={classesForm['reassign']}>
         Don`t have an account?{' '}
-        <Link to="/sign_up">
-          <span>Sign In</span>
+        <Link to="/sign-up">
+          <span>Sign Up</span>
         </Link>
       </p>
     </div>

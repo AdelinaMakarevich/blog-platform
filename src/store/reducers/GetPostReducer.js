@@ -1,5 +1,6 @@
 export const GET_POST = 'GET_POST'
 export const CLEAR_POST = 'CLEAR_POST'
+export const ERROR_POST = 'ERROR_POST'
 
 const getPostReducer = (state = {}, action) => {
   switch (action.type) {
@@ -7,6 +8,8 @@ const getPostReducer = (state = {}, action) => {
       return { ...action.article }
     case CLEAR_POST:
       return {}
+    case ERROR_POST:
+      return { ...action.article }
     default:
       return state
   }

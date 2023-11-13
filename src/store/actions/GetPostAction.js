@@ -1,4 +1,4 @@
-import { GET_POST, CLEAR_POST } from '../reducers/GetPostReducer'
+import { GET_POST, CLEAR_POST, ERROR_POST } from '../reducers/GetPostReducer'
 
 const getPostAction = (article) => {
   return {
@@ -13,4 +13,11 @@ const clearPostAction = () => {
   }
 }
 
-export { getPostAction, clearPostAction }
+const errorPostAction = (article) => {
+  return {
+    type: ERROR_POST,
+    article,
+  }
+}
+
+export { getPostAction, clearPostAction, errorPostAction }

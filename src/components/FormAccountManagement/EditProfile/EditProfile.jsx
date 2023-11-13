@@ -4,11 +4,18 @@ import { useNavigate } from 'react-router-dom'
 
 import { fetchUpdateUser } from '../../../service/updateUser'
 import { updateUsername, updateEmail, updatePassword, updateAvatarImage } from '../../../store/actions/UpdateUserAction'
+import {
+  selectAuthorization,
+  selectNewPassword,
+  selectEmailError,
+  selectUsernameError,
+  selectUserObject,
+} from '../../../store/selectors'
 import classesForm from '../FormStyle.module.scss'
 
 const Profile = () => {
   const navigate = useNavigate()
-  const authorization = useSelector((store) => store.logIn.authorization)
+  const authorization = useSelector(selectAuthorization)
 
   useEffect(() => {
     if (!authorization) {
@@ -18,14 +25,11 @@ const Profile = () => {
 
   const dispatch = useDispatch()
 
-  const token = useSelector((store) => store.updateUser.token)
-  const username = useSelector((store) => store.updateUser.username)
-  const email = useSelector((store) => store.updateUser.email)
-  const newPassword = useSelector((store) => store.updateUser.newPassword)
-  const avatarImage = useSelector((store) => store.updateUser.avatarImage)
+  const newPassword = useSelector(selectNewPassword)
+  const userObject = useSelector(selectUserObject)
 
-  const emailError = useSelector((store) => store.updateUser.emailError)
-  const usernameError = useSelector((store) => store.updateUser.usernameError)
+  const emailError = useSelector(selectEmailError)
+  const usernameError = useSelector(selectUsernameError)
 
   const validForm = !emailError && !usernameError
 
@@ -33,12 +37,10 @@ const Profile = () => {
     e.preventDefault()
     if (validForm) {
       localStorage.user = JSON.stringify({
-        username: username,
-        email: email,
-        token: token,
-        image: avatarImage,
+        userObject,
       })
-      dispatch(fetchUpdateUser(token, username, email, avatarImage))
+      dispatch(fetchUpdateUser(userObject.token, userObject.username, userObject.email, userObject.image))
+      navigate('/')
     } else {
       console.log(e)
     }
@@ -51,7 +53,7 @@ const Profile = () => {
         <label className={classesForm['label']}>
           username
           <input
-            value={username}
+            value={userObject.username}
             onChange={(e) => dispatch(updateUsername(e.target.value))}
             className={`${classesForm['input']} ${usernameError ? classesForm['input-error'] : null}`}
             type="text"
@@ -65,7 +67,7 @@ const Profile = () => {
         <label className={classesForm['label']}>
           Email address
           <input
-            value={email}
+            value={userObject.email}
             onChange={(e) => dispatch(updateEmail(e.target.value))}
             className={`${classesForm['input']} ${emailError ? classesForm['input-error'] : null}`}
             type="email"
@@ -87,7 +89,7 @@ const Profile = () => {
         <label className={classesForm['label']}>
           Avatar image(url)
           <input
-            value={avatarImage}
+            value={userObject.image}
             onChange={(e) => dispatch(updateAvatarImage(e.target.value))}
             className={classesForm['input']}
             type="url"
