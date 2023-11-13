@@ -1,2 +1,2 @@
 # blog-platform
- blog
+https://blog-platform-mauve-two.vercel.app/

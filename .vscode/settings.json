@@ -1,9 +1,0 @@
-{
-  "editor.insertSpaces": true,
-  "editor.formatOnSave": false,
-  "prettier.singleQuote": true,
-  "editor.tabSize": 2,
-  "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": true
-  }
-}
