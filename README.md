@@ -1,2 +1,2 @@
 # blog-platform
-https://blog-platform-mauve-two.vercel.app/
+https://blog-platform-neon-xi.vercel.app/
